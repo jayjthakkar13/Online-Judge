@@ -21,6 +21,7 @@ export default model("User", userSchema);
 
 export type UserDocument = {
 	_id: Types.ObjectId,
+  name: string,
 	email: string,
 	passwordHash?: string
 };
