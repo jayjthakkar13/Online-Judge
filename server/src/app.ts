@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./config";
 
 import authRouter from "./routes/auth.routes";
+import problemRouter from "./routes/problems.routes"
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/auth', authRouter);
+app.use(problemRouter);
 
 connectDB()
   .then(() => {
