@@ -1,6 +1,16 @@
 import { Schema, Types, model } from "mongoose";
 
-const submissionSchema = new Schema({
+export type SubmissionDocument = {
+	userId: Types.ObjectId,
+	problemId: Types.ObjectId,
+	language: "C" | "C++" | "Python",
+	code: string,
+  verdict: "Accepted" | "Rejected",
+  createdAt: Date,
+  updatedAt: Date
+};
+
+const submissionSchema = new Schema<SubmissionDocument>({
   userId: {
     type: Types.ObjectId,
     ref: 'User',
@@ -25,13 +35,4 @@ const submissionSchema = new Schema({
   }
 }, { timestamps: true });
 
-export default model("Submission", submissionSchema);
-
-export type SubmissionDocument = {
-	userId: Types.ObjectId,
-	problemId: Types.ObjectId,
-	language: "C" | "C++" | "Python",
-	code: string,
-  verdict: "Accepted" | "Rejected",
-  submittedAt: Date
-};
+export default model<SubmissionDocument>("Submission", submissionSchema);
