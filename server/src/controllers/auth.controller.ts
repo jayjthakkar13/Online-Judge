@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import AuthService from "../services/auth.service";
-import { ContentTypes, ResponseData, SendResponse } from "../utils";
+import { ContentTypes, GetResponseData, ResponseData, SendResponse } from "../utils";
 
 interface AuthDTO {
   userName: string;
@@ -10,11 +10,7 @@ interface AuthDTO {
 
 export default class AuthController {
 	static async register(req: Request, res: Response) {
-    const data: ResponseData = {
-			statusCode: 400,
-			contentType: ContentTypes.Text,
-			response: "Missing Credentials"
-		};
+    const data: ResponseData = GetResponseData(400, ContentTypes.Text, "Missing Credentials");
 
 		try {
 			const { userName, userEmail, userPassword } = req.body as AuthDTO;
@@ -32,11 +28,7 @@ export default class AuthController {
   }
 
 	static async login(req: Request, res: Response) {
-    const data: ResponseData = {
-			statusCode: 400,
-			contentType: ContentTypes.Text,
-			response: "Missing Credentials"
-		};
+    const data: ResponseData = GetResponseData(400, ContentTypes.Text, "Missing Credentials");
 
 		try {
 			const { userEmail, userPassword } = req.body as AuthDTO;

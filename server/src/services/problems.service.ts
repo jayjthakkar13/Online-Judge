@@ -1,4 +1,3 @@
-import { ContentTypes, GetResponseData, ResponseData } from "../utils";
 import Problem, { ProblemDocument } from "../models/Problem";
 
 export default class ProblemService {
