@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="left-pane">
+    <h1 class="title">{{ name() }}</h1>
+    <div class="statement">
+      <h3>Problem Statement</h3>
+      <p class="preserve-lines">{{ statement() }}</p>
+    </div>
+  </div>
+
+  <div class="right-pane">
+    <div class="language-box">
+      <h3>Language</h3>
+      <select [value]="language()" (change)="setLanguage($any($event.target).value)">
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="python">Python</option>
+      </select>
+    </div>
+
+    <div class="editor">
+      <h3>Code</h3>
+      <textarea
+        [value]="code()"
+        (input)="setCode($any($event.target).value)"
+        spellcheck="false"
+      ></textarea>
+      <button (click)="runCode()" [disabled]="running()">Run</button>
+    </div>
+
+    <div class="verdict">
+      <h3>Verdict</h3>
+      <span
+        [class.accepted]="verdict() === 'Accepted'"
+        [class.error]="verdict() === 'Rejected'"
+      >
+        {{ verdict() }}
+      </span>
+    </div>
+
+    <div class="output">
+      <h3>Output</h3>
+      <pre>{{ output() }}</pre>
+    </div>
+  </div>
+</div>

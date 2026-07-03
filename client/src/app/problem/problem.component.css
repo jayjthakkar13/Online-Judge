@@ -1,0 +1,167 @@
+
+/* ===== Page Layout ===== */
+.container {
+  display: flex;
+  height: 100vh;
+  background: #f3f4f6;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  overflow: hidden;
+}
+
+/* ===== LEFT PANE ===== */
+.left-pane {
+  width: 40%;
+  padding: 20px;
+  overflow-y: auto;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #111827;
+}
+
+.statement {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.statement p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* ===== RIGHT PANE ===== */
+.right-pane {
+  width: 60%;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* ===== Shared Card Style ===== */
+.language-box,
+.editor,
+.output,
+.verdict {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* ===== Headings ===== */
+h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+/* ===== Language Selector ===== */
+.language-box select {
+  width: 180px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
+
+/* ===== Code Editor ===== */
+textarea {
+  width: 100%;
+  height: 260px;
+  box-sizing: border-box;
+  padding: 12px;
+  font-family: monospace;
+  font-size: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  background: #0b1020;
+  color: #e5e7eb;
+  outline: none;
+}
+
+textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* ===== Button ===== */
+.editor button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.editor button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+}
+
+.editor button:disabled {
+  background-color: #9ca3af;
+  color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ===== Output ===== */
+.output pre {
+  background: #0b1020;
+  color: #22c55e;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  overflow-x: auto;
+}
+
+/* ===== Verdict ===== */
+.verdict span {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+.accepted {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.preserve-lines {
+  white-space: pre-line;
+}
+ 
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .left-pane,
+  .right-pane {
+    width: 100%;
+    height: auto;
+  }
+
+  textarea {
+    height: 200px;
+  }
+}
