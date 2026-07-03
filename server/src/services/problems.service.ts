@@ -7,7 +7,7 @@ export default class ProblemService {
   }
 
   public static async getProblem(name: string) {
-    const problem = await Problem.find({ name });
+    const problem = await Problem.findOne({ name });
     return problem;
   }
 }

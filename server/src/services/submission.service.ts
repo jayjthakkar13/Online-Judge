@@ -4,20 +4,23 @@ import { v4 } from "uuid";
 import { exec } from "child_process";
 import Submission, { SubmissionDocument } from "../models/Submission";
 import { promisify } from "util";
-import { Types } from "mongoose";
+import User from "../models/User";
+import Problem from "../models/Problem";
 
 interface NewSubmission {
-  userId: Types.ObjectId;
-  problemId: Types.ObjectId;
+  userEmail: string;
+  problemName: string;
   language: "C" | "C++" | "Python";
   code: string;
 }
 
 export default class SubmissionService {
   public static async createSubmission (submission: NewSubmission, verdict: boolean) {
+    const user = await User.findOne({ email: submission.userEmail });
+    const problem = await Problem.findOne({ name: submission.problemName });
     await Submission.insertOne({
-      userId: submission.userId,
-      problemId: submission.problemId,
+      userId: user!._id,
+      problemId: problem!._id,
       language: submission.language,
       code: submission.code,
       verdict: (verdict ? "Accepted": "Rejected")
@@ -51,11 +54,19 @@ export default class SubmissionService {
       cmd += ` "${filepath}" -o "${outpath}" && cd "${dirOutputs}" && "./${outfile}"`;
     }
     
-    const { stdout, stderr } = await promisify(exec)(cmd);
-    if (stderr) {
-      throw new Error(stderr);
+    try {
+      const { stdout, stderr } = await promisify(exec)(cmd);
+      if (stderr && !stdout) {
+        return { data: stderr, verdict: false };
+      }
+
+      return { data: stdout || stderr, verdict: true };
+    } catch (err: any) {
+      return {
+        data: err.stderr || err.message,
+        verdict: false
+      };
     }
-    return { data: stdout, verdict: true };
   }
 
   public static async addSubmission (submission: NewSubmission) {
