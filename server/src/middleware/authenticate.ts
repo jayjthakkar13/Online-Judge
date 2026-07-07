@@ -18,8 +18,7 @@ export default async function authenticate (req: Request, res: Response, next: N
 			res.status(401).json({ message: 'Unauthorized: Invalid token' });
 			return;
 		}
-
-		req.body = user;
+		req.user = user;
 		next();
 	} catch (err) {
 		if (err instanceof jwt.JsonWebTokenError) {
