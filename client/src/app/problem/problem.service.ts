@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Problem } from '../problemset/problemset.service';
 
-export type Language = 'c' | 'cpp' | 'python';
+export type Language = 'c' | 'cpp' | 'py';
 
 export interface SubmitResponse {
   data: string;
@@ -41,21 +41,30 @@ int main() {
     return 0;
 }`;
 
-      case 'python':
+      case 'py':
         return `# write solution here
 print("Hello")`;
     }
   }
 
-  run(name: string, code: string, language: Language): Observable<SubmitResponse> {
+  run(name: string, code: string, language: Language, input: string): Observable<SubmitResponse> {
+    const payload = {
+      problemName: name,
+      language: language,
+      code: code,
+      input: input
+    };
     return this.http
-      .post<SubmitResponse>(`${this.baseUrl}/submit`, { userEmail: localStorage.getItem('onlinejudge.userEmail'), problemName: name, language: language, code: code });
+      .post<SubmitResponse>(`${this.baseUrl}/run`, payload);
   }
-}
 
-interface NewSubmission {
-  userEmail: string;
-  problemName: string;
-  language: "C" | "C++" | "Python";
-  code: string;
+  submit(name: string, code: string, language: Language): Observable<SubmitResponse> {
+    const payload = {
+      name: name,
+      code: code,
+      language: language
+    };
+    return this.http
+      .post<SubmitResponse>(`${this.baseUrl}/submit`, payload);
+  }
 }

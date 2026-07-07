@@ -25,6 +25,8 @@
               }
             ],
             "styles": [
+              "node_modules/codemirror/lib/codemirror.css",
+              "node_modules/codemirror/theme/material-darker.css",
               "src/styles.css"
             ]
           },

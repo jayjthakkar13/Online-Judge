@@ -6,20 +6,23 @@ const test_caseSchema = new Schema({
     ref: 'Problem',
     required: true
   },
-  input: {
-    type: String,
-    required: true
-  },
-	output: {
-    type: String,
-    required: true
-  }
+  test_cases: [
+    {
+      input: {
+        type: String,
+        required: true
+      },
+      output: {
+        type: String,
+        required: true
+      }
+    }
+  ]
 });
 
 export default model("Test_Case", test_caseSchema);
 
 export type Test_CaseDocument = {
   problemId: Types.ObjectId,
-	input: string,
-	output: string
+	test_cases: {input: string, output: string}[]
 };

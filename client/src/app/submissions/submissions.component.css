@@ -1,0 +1,283 @@
+.submissions-page {
+  width: min(1000px, 92%);
+  margin: 40px auto;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.problem-title {
+  font-size: 2.2rem;
+  color: #f8fafc;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.problem-title:hover {
+  color: #60a5fa;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+.empty-submissions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  background: #1e293b;
+  border: 2px dashed #334155;
+  border-radius: 16px;
+  max-width: 100%;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.empty-submissions h3 {
+  color: #f8fafc;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.empty-submissions p {
+  color: #94a3b8;
+  font-size: 14px;
+  max-width: 360px;
+  line-height: 1.5;
+}
+
+.submission-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.submission-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  transition: .25s;
+}
+
+.submission-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+.submission-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Alignment row container */
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.verdict {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.accepted {
+  background: rgba(16,185,129,.15);
+  color: #34d399;
+}
+
+.rejected {
+  background: rgba(239, 68, 68,.15);
+  color: #f87171;
+}
+
+.submission-lang {
+  font-size: 13px;
+  font-weight: 600;
+  color: #60a5fa;
+  background: rgba(37, 99, 235, 0.15);
+  padding: 4px 12px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
+.submission-date {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.view-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #3b82f6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.submission-modal {
+  width: min(900px, 92vw);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 18px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 22px;
+  background: #243247;
+  border-bottom: 1px solid #334155;
+}
+
+.modal-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-title h3 {
+  color: white;
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.language-badge {
+  display: inline-block;
+  width: max-content;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.15);
+  color: #60a5fa;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.copy-btn {
+  padding: 6px 12px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  background: #334155;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+.close-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  background: #334155;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.close-btn:hover {
+  background: #475569;
+}
+
+.modal-content {
+  background: #0f172a;
+  padding: 0;
+  overflow: hidden;
+  flex: 1;
+}
+
+.modal-content ::ng-deep .CodeMirror {
+  height: 60vh;
+  font-family: 'JetBrains Mono', Fira Code, monospace;
+  font-size: 14px;
+}
+
+.modal-content ::ng-deep .CodeMirror-scroll {
+  max-height: 60vh;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 8px;
+}
+
+@media(max-width:700px) {
+  .submission-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .view-btn {
+    width: 100%;
+  }
+
+  .problem-title {
+    font-size: 1.8rem;
+  }
+}

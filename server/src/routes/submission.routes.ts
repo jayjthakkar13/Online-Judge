@@ -4,10 +4,12 @@ import authenticate from "../middleware/authenticate";
 
 const router = Router();
 
+router.post('/run', authenticate, SubmissionController.run);
+
 router.post('/submit', authenticate, SubmissionController.submit);
 
 router.get('/submission/:submissionId', authenticate, SubmissionController.getSubmission);
 
-router.get('/submissions/:userId', authenticate, SubmissionController.getAllSubmissions);
+router.get('/submissions/:problemName', authenticate, SubmissionController.getAllSubmissions);
 
 export default router;

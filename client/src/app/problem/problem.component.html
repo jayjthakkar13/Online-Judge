@@ -1,45 +1,66 @@
-<div class="container">
-  <div class="left-pane">
-    <h1 class="title">{{ name() }}</h1>
-    <div class="statement">
-      <h3>Problem Statement</h3>
-      <p class="preserve-lines">{{ statement() }}</p>
+<div class="page">
+  <section class="left">
+    <div class="header">
+      <h1>{{ title() }}</h1>
+      <button (click)="viewSubmissions()">View Submissions</button>
     </div>
-  </div>
-
-  <div class="right-pane">
-    <div class="language-box">
-      <h3>Language</h3>
-      <select [value]="language()" (change)="setLanguage($any($event.target).value)">
-        <option value="c">C</option>
-        <option value="cpp">C++</option>
-        <option value="python">Python</option>
-      </select>
+    <div class="body">
+      <p>{{ statement() }}</p>
     </div>
+  </section>
 
+  <section class="right">
     <div class="editor">
-      <h3>Code</h3>
-      <textarea
-        [value]="code()"
-        (input)="setCode($any($event.target).value)"
-        spellcheck="false"
-      ></textarea>
-      <button (click)="runCode()" [disabled]="running()">Run</button>
+      <div class="topbar">
+        <span>Code</span>
+        <select
+          [value]="language()"
+          (change)="setLanguage($any($event.target).value)">
+          <option value="c">C</option>
+          <option value="cpp">C++</option>
+          <option value="py">Python</option>
+        </select>
+      </div>
+
+      <div class="editor-body">
+        <ngx-codemirror
+          [ngModel]="code()"
+          (ngModelChange)="code.set($event)"
+          [options]="editorOptions()">
+        </ngx-codemirror>
+      </div>
     </div>
 
-    <div class="verdict">
-      <h3>Verdict</h3>
-      <span
-        [class.accepted]="verdict() === 'Accepted'"
-        [class.error]="verdict() === 'Rejected'"
-      >
-        {{ verdict() }}
-      </span>
+    <div class="io">
+      <div class="tabs">
+        <button (click)="tab.set('input')" [class.active]="tab() === 'input'">Input</button>
+        <button (click)="tab.set('output')" [class.active]="tab() === 'output'">Output</button>
+      </div>
+
+      <div class="io-body">
+        @if(tab() === 'input') {
+          <textarea
+            [value]="input()"
+            (input)="input.set($any($event.target).value)"
+            placeholder="Enter input here...">
+          </textarea>
+        } @else {
+          @if(showResult()) {
+            <pre>{{ output() }}</pre>
+          } @else {
+            <div>Run code to see output</div>
+          }
+        }
+      </div>
     </div>
 
-    <div class="output">
-      <h3>Output</h3>
-      <pre>{{ output() }}</pre>
+    <div class="actions">
+      <button class="run" (click)="runCode()" [disabled]="running()">
+        Run
+      </button>
+      <button class="submit" (click)="submitCode()" [disabled]="running()">
+        Submit
+      </button>
     </div>
-  </div>
+  </section>
 </div>
