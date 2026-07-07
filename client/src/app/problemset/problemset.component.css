@@ -47,11 +47,11 @@
 .problem-row {
   display: flex;
   align-items: center;
-  padding: 14px 24px;
+  gap: 24px;
+  padding: 16px 24px;
   cursor: pointer;
   background: #1e293b;
-  border-bottom: 1px solid #1e293b;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .problem-row:nth-child(even) {
@@ -59,11 +59,23 @@
 }
 
 .problem-row:hover {
-  background: #28374f;
+  background: #243249;
+}
+
+.problem-row:hover .title, .problem-row:hover .problem-id {
+  color: #60a5fa;
 }
 
 .problem-row:not(:last-child) {
   border-bottom: 1px solid #334155;
+}
+
+.problem-id {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  min-width: 60px;
 }
 
 .title-wrapper {
@@ -73,21 +85,13 @@
   min-width: 0;
 }
 
-.title-wrapper {
-  color: #3b82f6;
-}
-
 .title {
-  font-size: 0.9rem;
-  color: #94a3b8;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #e2e8f0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 600px;
-}
-
-.title:hover {
-  color: #3b82f6;
 }
 
 @media (max-width: 768px) {
@@ -102,10 +106,16 @@
   }
 
   .problem-row {
-    padding: 12px 16px;
+    padding: 14px 16px;
+    gap: 16px;
+  }
+
+  .problem-id {
+    min-width: auto;
+    font-size: 0.85rem;
   }
 
   .title {
-    display: none;
+    font-size: 0.9rem;
   }
 }

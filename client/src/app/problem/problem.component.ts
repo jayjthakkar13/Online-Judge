@@ -27,7 +27,7 @@ export class ProblemComponent {
   readonly language = signal<Language>('cpp');
   readonly input = signal<string>('');
   readonly output = signal<string>('');
-  readonly verdict = signal<'' | 'Accepted' | 'Rejected'>('');
+  readonly verdict = signal<'Accepted' | 'Rejected' | null>(null);
   readonly tab = signal<'input' | 'output'>('input');
   readonly editorOptions = computed<EditorConfiguration> (() => ({
       theme: 'material-darker',

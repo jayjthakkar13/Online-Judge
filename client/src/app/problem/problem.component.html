@@ -46,7 +46,7 @@
           </textarea>
         } @else {
           @if(showResult()) {
-            <pre>{{ output() }}</pre>
+            <pre [class]="verdict() === 'Accepted' ? 'accepted': 'rejected'">{{ output() }}</pre>
           } @else {
             <div>Run code to see output</div>
           }
