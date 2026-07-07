@@ -1,21 +1,22 @@
 <section class="home">
   <h1>Problems</h1>
+
   @if (loading()) {
     <p class="info">Loading...</p>
   }
   @if (error()) {
     <p class="error">{{ error() }}</p>
   }
-  <div class="list">
-    @for (p of problems(); track p.name) {
-      <div class="card" (click)="openProblem(p.name)">
-        <div class="header">
-          <span class="name">{{ p.name }}</span>
+
+  <div class="problem-table">
+    <div class="list">
+      @for (p of problems(); track p.name; let idx = $index) {
+        <div class="problem-row" (click)="openProblem(p.name)">
+          <div class="title-wrapper">
+            <span class="title">{{idx + 1}}.&nbsp;&nbsp;&nbsp;{{ p.title }}</span>
+          </div>
         </div>
-        <p class="statement">
-          {{ p.statement }}
-        </p>
-      </div>
-    }
+      }
+    </div>
   </div>
 </section>

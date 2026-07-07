@@ -5,6 +5,10 @@ const problemSchema = new Schema({
     type: String,
     required: true
   },
+  title: {
+    type: String,
+    required: true
+  },
 	statement: {
     type: String,
     required: true
@@ -18,5 +22,6 @@ export default model("Problem", problemSchema);
 export type ProblemDocument = {
 	_id: Types.ObjectId,
 	name: string,
+  title: string,
 	statement: string
 };

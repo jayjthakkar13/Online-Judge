@@ -1,55 +1,111 @@
 .home {
-  max-width: 900px;
-  margin: 3rem auto;
-  padding: 1rem;
-  font-family: system-ui, sans-serif;
+  width: min(1200px, 94%);
+  margin: 40px auto;
 }
 
-h1 {
-  margin-bottom: 1.5rem;
+.home h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 24px;
+  letter-spacing: -0.3px;
+}
+
+.info,
+.error {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.info {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  color: #93c5fd;
+}
+
+.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  color: #fca5a5;
+}
+
+.problem-table {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
 }
 
-.card {
-  padding: 16px;
-  border-radius: 10px;
-  background: #0f172a;
-  color: #e2e8f0;
-  border: 1px solid #1e293b;
+.problem-row {
+  display: flex;
+  align-items: center;
+  padding: 14px 24px;
   cursor: pointer;
-  transition: 0.2s;
+  background: #1e293b;
+  border-bottom: 1px solid #1e293b;
+  transition: background 0.15s ease;
 }
 
-.card:hover {
-  border-color: #3b82f6;
-  transform: translateY(-2px);
+.problem-row:nth-child(even) {
+  background: #151f32;
 }
 
-.name {
-  font-weight: 700;
-  color: #60a5fa;
-  font-size: 1.1rem;
+.problem-row:hover {
+  background: #28374f;
 }
 
-.statement {
-  margin-top: 8px;
-  color: #cbd5e1;
+.problem-row:not(:last-child) {
+  border-bottom: 1px solid #334155;
+}
 
-  display: -webkit-box;
-  /* -webkit-line-clamp: 2; */
-  -webkit-box-orient: vertical;
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.title-wrapper {
+  color: #3b82f6;
+}
+
+.title {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 600px;
 }
 
-.error {
-  color: #f87171;
+.title:hover {
+  color: #3b82f6;
 }
 
-.info {
-  color: #60a5fa;
+@media (max-width: 768px) {
+  .home {
+    width: 95%;
+    margin: 24px auto;
+  }
+
+  .home h1 {
+    font-size: 1.5rem;
+    margin-bottom: 18px;
+  }
+
+  .problem-row {
+    padding: 12px 16px;
+  }
+
+  .title {
+    display: none;
+  }
 }

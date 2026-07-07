@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 export interface Problem {
   name: string;
+  title: string;
   statement: string;
 }
 

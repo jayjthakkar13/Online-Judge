@@ -33,7 +33,11 @@ export class ProblemsetComponent {
           this.problems.set(res);
           this.loading.set(false);
         },
-        error: () => {
+        error: (err) => {
+          if (err.status === 401) {
+            localStorage.clear();
+            this.router.navigateByUrl("/auth");
+          }
           this.error.set('Failed to load problems');
           this.loading.set(false);
         }
