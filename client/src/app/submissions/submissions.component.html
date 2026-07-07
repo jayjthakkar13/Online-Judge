@@ -1,0 +1,80 @@
+<div class="submissions-page">
+
+  <header class="page-header">
+    <div>
+      <h1 class="problem-title" [routerLink]="['/home/problem/', name()]">
+        {{ name() }} - {{ title() }}
+      </h1>
+      <p class="subtitle">Submission History</p>
+    </div>
+  </header>
+
+  <section class="submission-list">
+    @if (submissions().length === 0) {
+      <div class="empty-submissions">
+        <div class="empty-icon">📂</div>
+        <h3>No submissions yet</h3>
+        <p>Your history for this problem will show up here once you submit your code.</p>
+      </div>
+    } @else {
+      @for (submission of submissions(); track submission._id) {
+        <article class="submission-card">
+          <div class="submission-left">
+            <div class="meta-row">
+            @if (submission.verdict === "Accepted") {
+              <span class="verdict accepted">✓ Accepted</span>
+            } @else {
+              <span class="verdict rejected">✕ Rejected</span>
+            }
+            <span class="submission-lang">{{ submission.language }}</span>
+          </div>
+          
+          <span class="submission-date">
+            {{ submission.createdAt | date:'medium' }}
+          </span>
+        </div>
+        
+        <button class="view-btn" (click)="selectedSubmission.set(submission)">
+          View Code
+        </button>
+      </article>
+    }
+  }
+  </section>
+
+</div>
+
+@if (selectedSubmission()) {
+<div class="modal-overlay">
+  <div class="submission-modal">
+    <div class="modal-header">
+      <div class="modal-title">
+        <h3>Submission</h3>
+        <span class="language-badge">
+          {{ selectedSubmission()!.language }}
+        </span>
+      </div>
+      <div class="modal-actions">
+        <button class="copy-btn" (click)="copyCode()">Copy</button>
+        <button class="close-btn" (click)="selectedSubmission.set(null)">✕</button>
+      </div>
+    </div>
+
+    <div class="modal-content">
+      <ngx-codemirror
+        [ngModel]="selectedSubmission()!.code"
+        [options]="{
+          mode: selectedSubmission()!.language === 'cpp'
+          ? 'text/x-c++src'
+          : selectedSubmission()!.language === 'c'
+          ? 'text/x-csrc'
+          : 'python',
+          theme: 'material-darker',
+          lineNumbers: true,
+          readOnly: true
+        }">
+      </ngx-codemirror>
+    </div>
+  </div>
+</div>
+}

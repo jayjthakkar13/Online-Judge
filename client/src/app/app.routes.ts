@@ -4,6 +4,8 @@ import { HomeComponent } from './home/home.component';
 import { ProblemComponent } from './problem/problem.component';
 import { ProblemsetComponent } from './problemset/problemset.component';
 import { authGuard } from './auth/auth.guard';
+import { homeGuard } from './home/home.guard';
+import { SubmissionsComponent } from './submissions/submissions.component';
 
 export const routes: Routes = [
   {
@@ -13,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'auth',
-    component: AuthComponent
+    component: AuthComponent,
+    canActivate: [homeGuard]
   },
   {
     path: 'home',
@@ -32,6 +35,10 @@ export const routes: Routes = [
       {
         path: 'problem/:problemName',
         component: ProblemComponent
+      },
+      {
+        path: 'submissions/:problemName',
+        component: SubmissionsComponent
       }
     ]
   }
