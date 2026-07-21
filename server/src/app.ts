@@ -6,6 +6,7 @@ import connectDB from "./config";
 import authRouter from "./routes/auth.routes";
 import problemRouter from "./routes/problems.routes"
 import submissionRouter from "./routes/submission.routes";
+import aiRouter from "./routes/ai.routes";
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/auth', authRouter);
 app.use(problemRouter);
 app.use(submissionRouter);
+app.use(aiRouter);
 
 connectDB()
   .then(() => {

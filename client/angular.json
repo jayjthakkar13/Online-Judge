@@ -25,9 +25,16 @@
               }
             ],
             "styles": [
+              "node_modules/prismjs/themes/prism-tomorrow.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/material-darker.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-c.js",
+              "node_modules/prismjs/components/prism-cpp.js",
+              "node_modules/prismjs/components/prism-python.js"
             ]
           },
           "configurations": {

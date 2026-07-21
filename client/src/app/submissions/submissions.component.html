@@ -1,5 +1,4 @@
 <div class="submissions-page">
-
   <header class="page-header">
     <div>
       <h1 class="problem-title" [routerLink]="['/home/problem/', name()]">
@@ -21,59 +20,87 @@
         <article class="submission-card">
           <div class="submission-left">
             <div class="meta-row">
-            @if (submission.verdict === "Accepted") {
-              <span class="verdict accepted">✓ Accepted</span>
-            } @else {
-              <span class="verdict rejected">✕ Rejected</span>
-            }
-            <span class="submission-lang">{{ submission.language }}</span>
+              @if (submission.verdict === "Accepted") {
+                <span class="verdict accepted">✓ Accepted</span>
+              } @else {
+                <span class="verdict rejected">✕ Rejected</span>
+              }
+              <span class="submission-lang">{{ submission.language }}</span>
+            </div>
+            <span class="submission-date">
+              {{ submission.createdAt | date:'medium' }}
+            </span>
           </div>
-          
-          <span class="submission-date">
-            {{ submission.createdAt | date:'medium' }}
-          </span>
-        </div>
-        
-        <button class="view-btn" (click)="selectedSubmission.set(submission)">
-          View Code
-        </button>
-      </article>
+          <button class="view-btn" (click)="selectedSubmission.set(submission)">
+            View Code
+          </button>
+        </article>
+      }
     }
-  }
   </section>
-
 </div>
 
 @if (selectedSubmission()) {
-<div class="modal-overlay">
-  <div class="submission-modal">
+<div class="modal-overlay" (click)="closeModal()">
+  <div class="submission-modal" [class.ai-open]="isAiLoading() || aiResponse()" (click)="$event.stopPropagation()">
     <div class="modal-header">
       <div class="modal-title">
         <h3>Submission</h3>
-        <span class="language-badge">
-          {{ selectedSubmission()!.language }}
-        </span>
+        <div class="modal-meta-row">
+          <span class="modal-lang-badge">{{ selectedSubmission()!.language }}</span>
+          <span class="modal-meta-divider">•</span>
+          <span class="modal-verdict-badge" [class.badge-accepted]="selectedSubmission()!.verdict === 'Accepted'">
+            {{ selectedSubmission()!.verdict }}
+          </span>
+        </div>
       </div>
       <div class="modal-actions">
+        <button 
+          class="ai-btn" 
+          [disabled]="isAiLoading()" 
+          (click)="askAI(selectedSubmission()!.code)"
+        >
+          {{ isAiLoading() ? '🤔 Thinking...' : '✨ AI Review' }}
+        </button>
         <button class="copy-btn" (click)="copyCode()">Copy</button>
-        <button class="close-btn" (click)="selectedSubmission.set(null)">✕</button>
+        <button class="close-btn" (click)="closeModal()">✕</button>
       </div>
     </div>
 
-    <div class="modal-content">
-      <ngx-codemirror
-        [ngModel]="selectedSubmission()!.code"
-        [options]="{
-          mode: selectedSubmission()!.language === 'cpp'
-          ? 'text/x-c++src'
-          : selectedSubmission()!.language === 'c'
-          ? 'text/x-csrc'
-          : 'python',
-          theme: 'material-darker',
-          lineNumbers: true,
-          readOnly: true
-        }">
-      </ngx-codemirror>
+    <div class="modal-content">      
+      <div class="code-editor-pane">
+        <ngx-codemirror
+          [ngModel]="selectedSubmission()!.code"
+          [options]="{
+            mode: selectedSubmission()!.language === 'cpp'
+            ? 'text/x-c++src'
+            : selectedSubmission()!.language === 'c'
+            ? 'text/x-csrc'
+            : 'python',
+            theme: 'material-darker',
+            lineNumbers: true,
+            readOnly: true
+          }">
+        </ngx-codemirror>
+      </div>
+
+      @if (isAiLoading() || aiResponse()) {
+        <div class="ai-response-panel">
+          <div class="ai-panel-body">
+            @if (isAiLoading()) {
+              <div class="ai-skeleton">
+                <div class="skeleton-line short"></div>
+                <div class="skeleton-line long"></div>
+                <div class="skeleton-line medium"></div>
+              </div>
+            } @else {
+              <div class="ai-response-container">
+                <markdown class="markdown-body" [data]="aiResponse()"></markdown>
+              </div>
+            }
+          </div>
+        </div>
+      }
     </div>
   </div>
 </div>

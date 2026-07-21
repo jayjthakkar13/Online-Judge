@@ -15,6 +15,11 @@ interface SubmissionResponse {
   submissions: SubmissionDocument[];
 }
 
+interface aiResponse {
+  success: boolean;
+  response: string
+}
+
 @Injectable({ providedIn: 'root' })
 export class SubmissionsService {
 	private readonly http = inject(HttpClient);
@@ -23,5 +28,11 @@ export class SubmissionsService {
   fetchSubmissions(name: string): Observable<SubmissionResponse> {
     return this.http
       .get<SubmissionResponse>(`${this.baseUrl}/submissions/${name}`);
+  }
+
+  askAI(code: string, name: string): Observable<aiResponse> {
+    const payload = { code, name };
+    return this.http
+      .post<aiResponse>(`${this.baseUrl}/ai-review`, payload);
   }
 }
