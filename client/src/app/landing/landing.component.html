@@ -1,0 +1,80 @@
+<div class="landing-container">
+  <nav class="navbar">
+    <div class="brand">
+      <span class="logo-icon">&lt;/&gt;</span>
+      <span class="logo-text">Online Judge</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-outline" (click)="goToLogin()">Log In</button>
+      <button class="btn btn-primary" (click)="goToLogin()">Get Started</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-text">
+      <span class="pill-badge">⚡ Sub-second Docker Execution</span>
+      <h1>Build, Test & <br><span class="accent-text">Judge Code Seamlessly.</span></h1>
+      <p class="hero-sub">
+        A high-performance online judge platform designed for developers and competitive programmers. Fast, isolated, and precise.
+      </p>
+      <div class="cta-group">
+        <button class="btn btn-primary btn-lg" (click)="goToLogin()">Start Coding</button>
+        <a href="#features" class="btn btn-outline btn-lg">Learn More</a>
+      </div>
+    </div>
+
+    <div class="code-card">
+      <div class="card-header">
+        <div class="window-controls">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <span class="file-name">solution.cpp</span>
+      </div>
+      <div class="card-body">
+        <pre><code><span class="kwd">#include</span> <span class="str">&lt;iostream&gt;</span>
+<span class="kwd">using namespace</span> std;
+
+<span class="type">int</span> main() &#123;
+    <span class="type">int</span> a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    cout &lt;&lt; <span class="str">"Result: "</span> &lt;&lt; (a + b) &lt;&lt; endl;
+    <span class="kwd">return</span> <span class="num">0</span>;
+&#125;  </code></pre>
+      </div>
+      <div class="card-footer">
+        <span class="status-success">✓ Accepted (12ms)</span>
+      </div>
+    </div>
+  </header>
+
+  <section id="features" class="features-section">
+    <h2>Engineered for Performance</h2>
+    <p class="section-desc">Built using modern containerization technology to handle code execution safely.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Container Sandboxing</h3>
+        <p>Isolated execution environments prevent malicious scripts and protect system resources.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h3>Instant Evaluation</h3>
+        <p>Low latency backend compilation ensures real-time feedback on every submission.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI Code Reviews</h3>
+        <p>Get your submission reviewed by AI for instant time complexity analysis, refactoring tips, and bug detection.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Online Judge. Built for developers.</p>
+  </footer>
+</div>

@@ -14,6 +14,6 @@ export class HomeComponent {
 
   logout(): void {
     this.auth.clearSession();
-		this.router.navigateByUrl('/auth');
+		this.router.navigateByUrl('/');
   }
 }

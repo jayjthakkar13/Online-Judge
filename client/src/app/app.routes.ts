@@ -6,12 +6,13 @@ import { ProblemsetComponent } from './problemset/problemset.component';
 import { authGuard } from './auth/auth.guard';
 import { homeGuard } from './home/home.guard';
 import { SubmissionsComponent } from './submissions/submissions.component';
+import { LandingComponent } from './landing/landing.component';
 
 export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth',
+    component: LandingComponent,
   },
   {
     path: 'auth',
