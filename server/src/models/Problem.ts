@@ -1,4 +1,4 @@
-import { Schema, Types, model } from "mongoose";
+import { HydratedDocument, InferSchemaType, Schema, Types, model } from "mongoose";
 
 const problemSchema = new Schema({
   name: {
@@ -12,6 +12,35 @@ const problemSchema = new Schema({
 	statement: {
     type: String,
     required: true
+  },
+  input: {
+    type: String,
+    required: true
+  },
+  output: {
+    type: String,
+    required: true
+  },
+  examples: {
+    type: [
+      {
+        input: String,
+        output: String
+      }
+    ],
+    required: true
+  },
+  timeLimit: {
+    type: Number,
+    required: true
+  },
+  memoryLimit: {
+    type: Number,
+    required: true
+  },
+  constraints: {
+    type: [String],
+    required: true
   }
 });
 
@@ -19,9 +48,4 @@ problemSchema.index({ name: 1 }, { unique: true });
 
 export default model("Problem", problemSchema);
 
-export type ProblemDocument = {
-	_id: Types.ObjectId,
-	name: string,
-  title: string,
-	statement: string
-};
+export type ProblemDocument = HydratedDocument<InferSchemaType<typeof problemSchema>>;

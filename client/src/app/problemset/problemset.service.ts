@@ -6,6 +6,12 @@ export interface Problem {
   name: string;
   title: string;
   statement: string;
+  input: string,
+  output: string,
+  examples: Array<{ input: string, output: string}>,
+  timeLimit: number,
+  memoryLimit: number,
+  constraints: string[];
 }
 
 @Injectable({ providedIn: 'root' })

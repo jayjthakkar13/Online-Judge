@@ -12,7 +12,7 @@
     <div class="list">
       @for (p of problems(); track p.name; let idx = $index) {
         <div class="problem-row" (click)="openProblem(p.name)">
-          <div class="problem-id">{{ p.name }}</div>
+          <div class="problem-id">{{ idx + 1 }}</div>
           <div class="title-wrapper">
             <span class="title">{{ p.title }}</span>
           </div>

@@ -4,8 +4,60 @@
       <h1>{{ title() }}</h1>
       <button (click)="viewSubmissions()">View Submissions</button>
     </div>
+    
     <div class="body">
-      <p>{{ statement() }}</p>
+      <div class="meta-limits">
+        <span><strong>Time Limit:</strong> {{ timeLimit() }}s</span>
+        <span><strong>Memory Limit:</strong> {{ memoryLimit() }}MB</span>
+      </div>
+
+      <div class="section-block">
+        <markdown [data]="statement()"></markdown>
+      </div>
+
+      @if (inputInfo()) {
+        <div class="section-block">
+          <h3>Input Format</h3>
+          <p>{{ inputInfo() }}</p>
+        </div>
+      }
+
+      @if (outputInfo()) {
+        <div class="section-block">
+          <h3>Output Format</h3>
+          <p>{{ outputInfo() }}</p>
+        </div>
+      }
+
+      @if (examples() && examples().length > 0) {
+        <div class="section-block">
+          <h3>Examples</h3>
+          @for (example of examples(); track $index) {
+            <div class="example-box">
+              <div class="example-title">Example {{ $index + 1 }}</div>
+              <div class="example-field">
+                <span class="label">Input:</span>
+                <pre>{{ example.input }}</pre>
+              </div>
+              <div class="example-field">
+                <span class="label">Output:</span>
+                <pre>{{ example.output }}</pre>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (constraints() && constraints().length > 0) {
+        <div class="section-block">
+          <h3>Constraints</h3>
+          <ul class="constraints-list">
+            @for (constraint of constraints(); track $index) {
+              <li><code>{{ constraint }}</code></li>
+            }
+          </ul>
+        </div>
+      }
     </div>
   </section>
 

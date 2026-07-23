@@ -2,7 +2,7 @@ import Problem, { ProblemDocument } from "../models/Problem";
 
 export default class ProblemService {
   public static async getAllProblems(): Promise<ProblemDocument[]> {
-    const problemset = await Problem.find().sort({ name: -1 });
+    const problemset = await Problem.find().select("name title");
     return problemset;
   }
 
