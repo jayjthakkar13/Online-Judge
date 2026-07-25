@@ -47,22 +47,26 @@ print("Hello")`;
     }
   }
 
-  run(name: string, code: string, language: Language, input: string): Observable<SubmitResponse> {
+  run(name: string, code: string, language: Language, input: string, timeLimit: number, memoryLimit: number): Observable<SubmitResponse> {
     const payload = {
       problemName: name,
       language: language,
       code: code,
-      input: input
+      input: input,
+      timeLimit: timeLimit,
+      memoryLimit: memoryLimit
     };
     return this.http
       .post<SubmitResponse>(`${this.baseUrl}/run`, payload);
   }
 
-  submit(name: string, code: string, language: Language): Observable<SubmitResponse> {
+  submit(name: string, code: string, language: Language, timeLimit: number, memoryLimit: number): Observable<SubmitResponse> {
     const payload = {
       name: name,
       code: code,
-      language: language
+      language: language,
+      timeLimit: timeLimit,
+      memoryLimit: memoryLimit
     };
     return this.http
       .post<SubmitResponse>(`${this.baseUrl}/submit`, payload);

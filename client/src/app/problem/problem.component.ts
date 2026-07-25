@@ -26,8 +26,8 @@ export class ProblemComponent {
   readonly statement = signal<string>('');
   readonly inputInfo = signal<string>('');
   readonly outputInfo = signal<string>('');
-  readonly timeLimit = signal<number | null>(null);
-  readonly memoryLimit = signal<number | null>(null);
+  readonly timeLimit = signal<number>(0);
+  readonly memoryLimit = signal<number>(0);
   readonly examples = signal<Array<{ input: string; output: string }>>([]);
   readonly constraints = signal<Array<string>>([]);
   readonly code = signal<string>('');
@@ -82,7 +82,7 @@ export class ProblemComponent {
 
   runCode() {
     this.running.set(true);
-    const request = this.submissionService.run(this.name(), this.code(), this.language(), this.input());
+    const request = this.submissionService.run(this.name(), this.code(), this.language(), this.input(), this.timeLimit(), this.memoryLimit());
     request.subscribe({
       next: (res) => {
         this.output.set(res.data);
@@ -96,7 +96,7 @@ export class ProblemComponent {
 
   submitCode() {
     this.running.set(true);
-    const request = this.submissionService.submit(this.name(), this.code(), this.language());
+    const request = this.submissionService.submit(this.name(), this.code(), this.language(), this.timeLimit(), this.memoryLimit());
     request.subscribe({
       next: (res) => {
         this.router.navigateByUrl(`/home/submissions/${this.name()}`);

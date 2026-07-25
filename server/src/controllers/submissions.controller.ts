@@ -7,8 +7,8 @@ export default class SubmissionController {
     const data: ResponseData = GetResponseData(400, ContentTypes.Json, { error: "Bad Request" });
     let output;
     const userEmail = req.user.email;
-    const { problemName, language, code, input } = req.body;
-    const submission = { userEmail, problemName, language, code, input };
+    const { problemName, language, code, input, timeLimit, memoryLimit } = req.body;
+    const submission = { userEmail, problemName, language, code, input, timeLimit, memoryLimit };
     try {
       output = await SubmissionService.run(submission);
       data.statusCode = 200;
@@ -26,10 +26,10 @@ export default class SubmissionController {
   static async submit (req: Request, res: Response) {
     const data: ResponseData = GetResponseData(201, ContentTypes.Json, { message: "Created submission" });
 
-    const { name, code, language } = req.body;
+    const { name, code, language, timeLimit, memoryLimit } = req.body;
     const userId = req.user._id;
     try {
-      const output = await SubmissionService.submit(userId, name, code, language);
+      const output = await SubmissionService.submit(userId, name, code, language, timeLimit, memoryLimit);
       data.response = output;
     } catch (err) {
       console.log(err);

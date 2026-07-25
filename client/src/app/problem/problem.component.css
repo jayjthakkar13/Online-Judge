@@ -215,12 +215,10 @@ html, body {
 .editor-body {
   flex: 1;
   min-height: 0;
-  overflow: hidden;
   position: relative;
 }
 
-.editor-body ngx-codemirror,
-.editor-body .CodeMirror {
+.editor-body ::ng-deep .CodeMirror {
   height: 100% !important;
   font-family: 'JetBrains Mono', Fira Code, monospace;
   font-size: 14px;
