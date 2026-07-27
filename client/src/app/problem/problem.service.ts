@@ -11,7 +11,7 @@ export interface SubmitResponse {
 }
 
 @Injectable({ providedIn: 'root' })
-export class SubmissionService {
+export class ProblemService {
   private readonly http = inject(HttpClient);
 	private readonly baseUrl = `http://localhost:5000`;
 

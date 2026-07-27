@@ -7,6 +7,7 @@ export interface AuthResponse {
 	user: {
     name: string;
     email: string;
+    role: string;
   }
 }
 
@@ -17,6 +18,7 @@ export class AuthService {
 
 	private static readonly TOKEN_KEY = 'onlinejudge.token';
 	private static readonly EMAIL = 'onlinejudge.userEmail';
+  private static readonly ROLE = 'onlinejudge.role'
 
 	register(name: string, email: string, password: string): Observable<AuthResponse> {
 		return this.http
@@ -33,10 +35,15 @@ export class AuthService {
 	clearSession(): void {
 		localStorage.removeItem(AuthService.TOKEN_KEY);
 		localStorage.removeItem(AuthService.EMAIL);
+		localStorage.removeItem(AuthService.ROLE);
 	}
 
 	getToken(): string | null {
 		return localStorage.getItem(AuthService.TOKEN_KEY);
+	}
+
+  getRole(): string | null {
+		return localStorage.getItem(AuthService.ROLE);
 	}
 
 	isAuthenticated(): boolean {
@@ -46,5 +53,6 @@ export class AuthService {
 	private setSession(res: AuthResponse): void {
 		localStorage.setItem(AuthService.TOKEN_KEY, res.token);
 		localStorage.setItem(AuthService.EMAIL, res.user.email);
+		localStorage.setItem(AuthService.ROLE, res.user.role);
 	}
 }

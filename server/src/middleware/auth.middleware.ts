@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
 
-export default async function authenticate (req: Request, res: Response, next: NextFunction) {
+export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const authHeader = req.headers.authorization;
 		if (!authHeader?.startsWith('Bearer ')) {
@@ -27,4 +27,13 @@ export default async function authenticate (req: Request, res: Response, next: N
 		}
 		res.status(500).json({ message: 'Internal Server Error' });
 	}
+}
+
+export const authorize = (...allowedRoles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ message: 'Forbidden: Insufficient Permissions' });
+    }
+    next();
+  };
 }

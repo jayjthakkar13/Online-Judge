@@ -12,6 +12,11 @@ const userSchema = new Schema({
 	passwordHash: {
     type: String,
     required: true
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
   }
 });
 
@@ -23,5 +28,6 @@ export type UserDocument = {
 	_id: Types.ObjectId,
   name: string,
 	email: string,
-	passwordHash?: string
+	passwordHash?: string,
+  role: string
 };

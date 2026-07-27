@@ -92,7 +92,7 @@ export default class AuthService {
 			const token = this.issueTokens(user._id);
 			return GetResponseData(201, ContentTypes.Json, {
 				token,
-				user: { name: user.name, email: user.email }
+				user: { name: user.name, email: user.email, role: user.role }
 			});
 		} catch (err) {
       await User.deleteOne({ _id: user._id });
@@ -122,7 +122,7 @@ export default class AuthService {
 
 		return GetResponseData(200, ContentTypes.Json, {
 			token,
-			user: { name: user.name, email: user.email }
+			user: { name: user.name, email: user.email, role: user.role }
 		});
 	}
 }

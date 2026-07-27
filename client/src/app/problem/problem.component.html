@@ -18,14 +18,14 @@
       @if (inputInfo()) {
         <div class="section-block">
           <h3>Input Format</h3>
-          <p>{{ inputInfo() }}</p>
+          <markdown [data]="inputInfo()"></markdown>
         </div>
       }
 
       @if (outputInfo()) {
         <div class="section-block">
           <h3>Output Format</h3>
-          <p>{{ outputInfo() }}</p>
+          <markdown [data]="outputInfo()"></markdown>
         </div>
       }
 
@@ -92,13 +92,13 @@
       <div class="io-body">
         @if(tab() === 'input') {
           <textarea
-            [value]="input()"
-            (input)="input.set($any($event.target).value)"
+            [value]="inputTab()"
+            (input)="inputTab.set($any($event.target).value)"
             placeholder="Enter input here...">
           </textarea>
         } @else {
           @if(showResult()) {
-            <pre [class]="verdict() === 'Accepted' ? 'accepted': 'rejected'">{{ output() }}</pre>
+            <pre [class]="verdict() === 'Accepted' ? 'accepted': 'rejected'">{{ outputTab() }}</pre>
           } @else {
             <div>Run code to see output</div>
           }

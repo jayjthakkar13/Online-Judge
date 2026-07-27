@@ -111,7 +111,7 @@ html, body {
 }
 
 .section-block markdown ::ng-deep code {
-  background: #0f172a;;
+  background: #0f172a;
   color: #38bdf8;
   border: 1px solid #334155;
   padding: 2px 4px;
