@@ -65,7 +65,7 @@ export class AuthComponent {
           this.toggleMode();
           this.form.reset();
         } else {
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/');
         }
 			},
 			error: (err: HttpErrorResponse) => {

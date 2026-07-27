@@ -45,6 +45,6 @@ export class ProblemsetComponent {
   }
 
   openProblem(name: string): void {
-    this.router.navigate([`home/problem/${name}`]);
+    this.router.navigateByUrl(`/problem/${name}`);
   }
 }

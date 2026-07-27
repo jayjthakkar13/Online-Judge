@@ -11,6 +11,6 @@ export class LandingComponent {
   private readonly router = inject(Router);
 
   goToLogin() {
-    this.router.navigate([`auth`]);
+    this.router.navigateByUrl('auth');
   }
 }

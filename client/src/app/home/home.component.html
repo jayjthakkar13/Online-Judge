@@ -1,12 +1,14 @@
 <section class="topbar">
-  <div class="brand">
+  <div class="brand" (click)="goHome()">
     <span class="logo-icon">&lt;/&gt;</span>
-    <h2 routerLink="/home" class="logo-text">Online Judge</h2>
+    <h2 class="logo-text">Online Judge</h2>
   </div>
 
-  <button class="logout-btn" (click)="logout()">
-    Logout
-  </button>
+  @if (isAuthenticated) {
+    <button class="logout-btn" (click)="logout()">
+      Logout
+    </button>
+  }
 </section>
 
 <main class="main-content">
