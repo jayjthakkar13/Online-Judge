@@ -1,0 +1,30 @@
+# 💻 Online Judge Platform
+
+An end-to-end, full-stack **Online Judge System** built using the **MEAN stack** (MongoDB, Express.js, Angular, Node.js). This platform allows users to browse problem sets, get AI-powered coding assistance, submit solutions in isolated Docker environments, view submission history, and manage problems via an Admin dashboard.
+
+---
+
+## 🚀 Features
+
+### 👤 User Features
+* **Authentication & Authorization**: Secure User signup, login, and JWT-based session management.
+* **Problemset Dashboard**: View programming problems.
+* **🤖 AI Assistance**: Integrated AI helper to analyze code complexity and assist in debugging.
+* **🐳 Docker-Based Code Execution**: Submissions are executed in isolated Docker containers, preventing untrusted code execution from compromising the host server while ensuring strict resource limits (CPU/Memory).
+* **Submission History**: Track past submissions, execution metrics, and status history.
+
+### 🛡️ Admin Features
+* **Problem Management (CRUD)**: Create, view, edit, and delete coding problems.
+* **Test Case & Constraint Configuration**: Configure input/output test cases, memory limits, and time limits.
+* **Role-Based Access Control**: Dedicated routes and views strictly restricted to administrator accounts.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend**: Angular (Standalone Components, Signals, Reactive Forms, Router Guards)
+* **Backend**: Node.js, Express.js
+* **Database**: MongoDB (Mongoose ODM)
+* **Containerization / Sandbox**: Docker & Docker Engine API
+* **AI Integration**: Gemini 2.5 Flash API
+* **Authentication**: JSON Web Tokens (JWT) & bcrypt.js
