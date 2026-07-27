@@ -12,7 +12,6 @@ export default class AIService {
       const responseText = result.response.text();
       return { status: 200, responseText };
     } catch (err: any) {
-      console.log(err);
       if (err.message?.includes("429")) {
         return {
           status: 429,

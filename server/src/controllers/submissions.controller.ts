@@ -32,7 +32,6 @@ export default class SubmissionController {
       const output = await SubmissionService.submit(userId, name, code, language, timeLimit, memoryLimit);
       data.response = output;
     } catch (err) {
-      console.log(err);
       data.statusCode = 500;
       data.response = { error: "Internal Server Error" };
     } finally { SendResponse(res, data); }

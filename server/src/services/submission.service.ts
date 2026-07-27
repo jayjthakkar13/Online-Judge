@@ -191,8 +191,11 @@ export default class SubmissionService {
 
   public static async getSubmissionsForUser(name: string, userId: string): Promise<SubmissionsResponse | null> {
     const problem = await Problem.findOne({ name });
-    const problemId = problem!._id;
-    const title = problem!.title;
+    if (problem === null) {
+      return { title: "NA", submissions: [] };
+    }
+    const problemId = problem._id;
+    const title = problem.title;
     const submissions = await Submission.find({ userId, problemId }).sort({ createdAt: -1 });
     return { title, submissions };
   }
