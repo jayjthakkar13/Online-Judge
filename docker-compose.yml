@@ -1,0 +1,13 @@
+services:
+  server:
+    build:
+      context: ./server
+    container_name: online-judge-server
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./server:/app
+    restart: unless-stopped
