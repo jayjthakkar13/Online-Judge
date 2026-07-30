@@ -14,7 +14,7 @@ export interface AuthResponse {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 	private readonly http = inject(HttpClient);
-	private readonly baseUrl = `http://localhost:5000/auth`;
+	private readonly baseUrl = `${process.env.SERVER_URL}/auth`;
 
 	private static readonly TOKEN_KEY = 'onlinejudge.token';
 	private static readonly EMAIL = 'onlinejudge.userEmail';

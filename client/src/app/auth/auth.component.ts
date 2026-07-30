@@ -97,7 +97,7 @@ export class AuthComponent {
 	}
 
   private formatError(err: HttpErrorResponse): string {
-		if (err.status === 0) return 'Could not reach the server. Is the API running on http://localhost:5000?';
+		if (err.status === 0) return 'Could not reach the server. Is the API running on process.env.SERVER_URL?';
 		const body = err.error;
 		if (typeof body === 'string') return body;
 		if (body && typeof body === 'object') {

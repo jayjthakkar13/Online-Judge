@@ -17,7 +17,7 @@ export interface Problem {
 @Injectable({ providedIn: 'root' })
 export class ProblemsetService {
 	private readonly http = inject(HttpClient);
-	private readonly baseUrl = `http://localhost:5000`;
+	private readonly baseUrl = process.env.SERVER_URL;
 
   fetchProblems(): Observable<Problem[]> {
     return this.http

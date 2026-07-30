@@ -6,7 +6,7 @@ import { Observable } from "rxjs";
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = 'http://localhost:5000';
+  private readonly baseUrl = process.env.SERVER_URL;
 
   getEmptyProblem(): Problem {
     return {

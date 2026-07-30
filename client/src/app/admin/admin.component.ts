@@ -12,8 +12,6 @@ import { AdminService } from './admin.service';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5000';
   private readonly adminService = inject(AdminService);
 
   readonly problems = signal<Problem[]>([]);

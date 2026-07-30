@@ -13,7 +13,7 @@ export interface SubmitResponse {
 @Injectable({ providedIn: 'root' })
 export class ProblemService {
   private readonly http = inject(HttpClient);
-	private readonly baseUrl = `http://localhost:5000`;
+	private readonly baseUrl = process.env.SERVER_URL;
 
   getProblem(name: string): Observable<Problem> {
     return this.http

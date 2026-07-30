@@ -23,7 +23,7 @@ interface aiResponse {
 @Injectable({ providedIn: 'root' })
 export class SubmissionsService {
 	private readonly http = inject(HttpClient);
-	private readonly baseUrl = `http://localhost:5000`;
+	private readonly baseUrl = process.env.SERVER_URL;
 
   fetchSubmissions(name: string): Observable<SubmissionResponse> {
     return this.http
