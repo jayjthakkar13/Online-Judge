@@ -1,7 +1,7 @@
 import { spawn } from "child_process";
 
 export default class DockerService {
-  public static async createContainer(dirPath: string, memoryLimit: number): Promise<string> {
+  public static async createContainer(hostPath: string, memoryLimit: number): Promise<string> {
     return new Promise((resolve, reject) => {
       const args = [
         "run",
@@ -11,7 +11,7 @@ export default class DockerService {
         `--memory-swap=${memoryLimit}m`,
         "--cpus=1.0",
         "--pids-limit=64",
-        "-v", `${dirPath}:/sandbox/workspace:rw`,
+        "-v", `${hostPath}:/sandbox/workspace:rw`,
         "-w", "/sandbox/workspace",
         "oj-runner",
         "tail", "-f", "/dev/null"

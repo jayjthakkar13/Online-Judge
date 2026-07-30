@@ -45,14 +45,15 @@ export default class SubmissionService {
 
   private static createFile (language: string, code: string) {
     const id = v4();
-    const dirCodes = path.join(__dirname, '../', 'submissions', 'workspace', id);
+    const dirCodes = path.join(process.cwd(), 'submissions', 'workspace', id);
+    const hostPath = path.join(process.env.SUBMISSIONS_PATH!, "workspace", id);
     if (!fs.existsSync(dirCodes)) {
       fs.mkdirSync(dirCodes, { recursive: true });
     }
     const filename = `solution.${language}`;
     const filepath = path.join(dirCodes, filename);
     fs.writeFileSync(filepath, code);
-    return { dirCodes, filename, language };
+    return { dirCodes, hostPath, filename };
   }
 
   private static getCompileCommand(language: string, filename: string): string {
@@ -79,9 +80,9 @@ export default class SubmissionService {
   }
 
   public static async run(submission: NewSubmission) {
-    let { dirCodes, filename } = this.createFile(submission.language, submission.code);
+    let { dirCodes, hostPath, filename } = this.createFile(submission.language, submission.code);
     filename = filename.split('.')[0]!;
-    const containerId = await DockerService.createContainer(dirCodes, submission.memoryLimit);
+    const containerId = await DockerService.createContainer(hostPath, submission.memoryLimit);
     try {
       const compileCommand = this.getCompileCommand(submission.language, filename);
       if (compileCommand) {
@@ -140,9 +141,9 @@ export default class SubmissionService {
       timeLimit: timeLimit,
       memoryLimit: memoryLimit
     }
-    let { dirCodes, filename } = this.createFile(language, code);
+    let { dirCodes, hostPath, filename } = this.createFile(language, code);
     filename = filename.split('.')[0]!;
-    const containerId = await DockerService.createContainer(dirCodes, memoryLimit);
+    const containerId = await DockerService.createContainer(hostPath, memoryLimit);
     try {
       const compileCmd = this.getCompileCommand(language, filename);
       if (compileCmd) {
