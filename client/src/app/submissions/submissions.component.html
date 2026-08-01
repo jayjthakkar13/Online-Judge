@@ -1,15 +1,21 @@
 <div class="submissions-page">
   <header class="page-header">
     <div>
-      <h1 class="problem-title" [routerLink]="['/problem/', name()]">
-        {{ title() }}
-      </h1>
+      @if (title() == '') {
+        <h1 class="info">Loading</h1>
+      } @else {
+        <h1 class="problem-title" [routerLink]="['/problem/', name()]">
+          {{ title() }}
+        </h1>
+      }
       <p class="subtitle">Submission History</p>
     </div>
   </header>
 
   <section class="submission-list">
-    @if (submissions().length === 0) {
+    @if (submissions() === null) {
+      <p class="info">Loading...</p>
+    } @else if (submissions()!.length === 0) {
       <div class="empty-submissions">
         <div class="empty-icon">📂</div>
         <h3>No submissions yet</h3>

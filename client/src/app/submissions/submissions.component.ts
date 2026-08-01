@@ -20,7 +20,7 @@ export class SubmissionsComponent {
   readonly isAiLoading = signal<boolean>(false);
   readonly name = signal<string>('');
   readonly title = signal<string>('');
-  readonly submissions = signal<SubmissionDocument[]>([]);
+  readonly submissions = signal<SubmissionDocument[] | null>(null);
   readonly selectedSubmission = signal<SubmissionDocument | null>(null);
   readonly aiResponse = signal<string | null>(null);
 
