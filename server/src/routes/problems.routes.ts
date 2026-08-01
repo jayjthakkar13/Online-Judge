@@ -8,7 +8,7 @@ router.post('/create', authenticate, authorize('admin'), ProblemsController.addP
 
 router.get('/problemset', authenticate, authorize('user', 'admin'), ProblemsController.getProblemSet);
 
-router.get('/problem/:problemName', authenticate, authorize('user'), ProblemsController.getProblem);
+router.get('/problem/:problemName', authenticate, authorize('user', 'admin'), ProblemsController.getProblem);
 
 router.put('/:problemName', authenticate, authorize('admin'), ProblemsController.updateProblem);
 

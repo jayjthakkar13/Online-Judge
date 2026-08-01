@@ -11,7 +11,6 @@ import { ProblemsetService, Problem } from './problemset.service';
   styleUrl: "./problemset.component.css",
 })
 export class ProblemsetComponent {
-  private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly problemsetService = inject(ProblemsetService);
 

@@ -27,7 +27,7 @@
           </div>
 
           <div class="actions">
-            <button class="btn-icon edit" (click)="openEditModal(p, $event)" title="Edit">✏️</button>
+            <button class="btn-icon edit" (click)="openEditModal(p.name, $event)" title="Edit">✏️</button>
             <button class="btn-icon delete" (click)="deleteProblem(p, $event)" title="Delete">🗑️</button>
           </div>
         </div>
@@ -40,7 +40,7 @@
   </div>
 </section>
 
-@if (showModal()) {
+<!-- @if (showModal()) {
   <div class="modal-backdrop" (click)="closeModal()">
     <div class="modal-content" (click)="$event.stopPropagation()">
       <h2>{{ isEditMode() ? 'Edit Problem' : 'Create Problem' }}</h2>
@@ -131,11 +131,173 @@
           }
         </div>
 
+        <div class="sub-section">
+          <div class="sub-header">
+            <h3>Judge Test Cases</h3>
+            <button type="button" class="btn btn-small" (click)="addTestCase()">+ Add Test Case</button>
+          </div>
+
+          @for (tc of testCases; track trackByIndex($index); let i = $index) {
+            <div class="nested-box">
+              <div class="nested-header">
+                <span>Test Case #{{ i + 1 }}</span>
+                @if (testCases.length > 1) {
+                  <button type="button" class="btn-text-danger" (click)="removeTestCase(i)">Remove</button>
+                }
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Hidden Input</label>
+                  <textarea [(ngModel)]="tc.input" [name]="'tc-in-' + i" rows="3" placeholder="Input data..."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Expected Output</label>
+                  <textarea [(ngModel)]="tc.output" [name]="'tc-out-' + i" rows="3" placeholder="Expected output..."></textarea>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
           <button type="submit" class="btn btn-primary">
             {{ isEditMode() ? 'Save Changes' : 'Create' }}
           </button>
+        </div>
+      </form>
+    </div>
+  </div>
+} -->
+
+@if (showModal()) {
+  <div class="modal-backdrop" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      
+      <div class="modal-header-actions">
+        <h2>{{ isEditMode() ? 'Edit Problem' : 'Create Problem' }}</h2>
+        <div class="modal-actions-top" style="display: flex; gap: 12px;">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">
+            {{ isEditMode() ? 'Save Changes' : 'Create' }}
+          </button>
+        </div>
+      </div>
+
+      <form (ngSubmit)="saveProblem()">
+
+        <!-- Scrollable Form Fields -->
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Name (Slug)</label>
+            <input type="text" [(ngModel)]="currentProblem.name" name="name" placeholder="e.g., two-sum" required />
+          </div>
+
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" [(ngModel)]="currentProblem.title" name="title" placeholder="e.g., Two Sum" required />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Time Limit (s)</label>
+            <input type="number" [(ngModel)]="currentProblem.timeLimit" name="timeLimit" required />
+          </div>
+
+          <div class="form-group">
+            <label>Memory Limit (MB)</label>
+            <input type="number" [(ngModel)]="currentProblem.memoryLimit" name="memoryLimit" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Problem Statement</label>
+          <textarea [(ngModel)]="currentProblem.statement" name="statement" rows="5" placeholder="Describe the problem..."></textarea>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Input Format</label>
+            <textarea [(ngModel)]="currentProblem.input" name="input" rows="4" placeholder="Describe input format..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Output Format</label>
+            <textarea [(ngModel)]="currentProblem.output" name="output" rows="4" placeholder="Describe output format..."></textarea>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-header">
+            <h3>Test Examples</h3>
+            <button type="button" class="btn btn-small" (click)="addExample()">+ Add Example</button>
+          </div>
+
+          @for (ex of currentProblem.examples; track trackByIndex($index); let i = $index) {
+            <div class="nested-box">
+              <div class="nested-header">
+                <span>Example #{{ i + 1 }}</span>
+                @if (currentProblem.examples.length > 1) {
+                  <button type="button" class="btn-text-danger" (click)="removeExample(i)">Remove</button>
+                }
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Input</label>
+                  <textarea [(ngModel)]="ex.input" [name]="'ex-in-' + i" rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Output</label>
+                  <textarea [(ngModel)]="ex.output" [name]="'ex-out-' + i" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-header">
+            <h3>Constraints</h3>
+            <button type="button" class="btn btn-small" (click)="addConstraint()">+ Add Constraint</button>
+          </div>
+
+          @for (c of currentProblem.constraints; track trackByIndex($index); let i = $index) {
+            <div class="constraint-row">
+              <input type="text" [(ngModel)]="currentProblem.constraints[i]" [name]="'constraint-' + i" placeholder="e.g., 1 <= N <= 10^5" />
+              @if (currentProblem.constraints.length > 1) {
+                <button type="button" class="btn-icon delete" (click)="removeConstraint(i)">🗑️</button>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="sub-section">
+          <div class="sub-header">
+            <h3>Judge Test Cases</h3>
+            <button type="button" class="btn btn-small" (click)="addTestCase()">+ Add Test Case</button>
+          </div>
+
+          @for (tc of testCases; track trackByIndex($index); let i = $index) {
+            <div class="nested-box">
+              <div class="nested-header">
+                <span>Test Case #{{ i + 1 }}</span>
+                @if (testCases.length > 1) {
+                  <button type="button" class="btn-text-danger" (click)="removeTestCase(i)">Remove</button>
+                }
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Hidden Input</label>
+                  <textarea [(ngModel)]="tc.input" [name]="'tc-in-' + i" rows="3" placeholder="Input data..."></textarea>
+                </div>
+                <div class="form-group">
+                  <label>Expected Output</label>
+                  <textarea [(ngModel)]="tc.output" [name]="'tc-out-' + i" rows="3" placeholder="Expected output..."></textarea>
+                </div>
+              </div>
+            </div>
+          }
         </div>
       </form>
     </div>

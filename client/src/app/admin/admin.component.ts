@@ -1,9 +1,8 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Problem } from '../problemset/problemset.service';
-import { AdminService } from './admin.service';
+import { AdminService, ProblemCard, TestCase } from './admin.service';
 
 @Component({
   selector: 'app-admin',
@@ -14,7 +13,7 @@ import { AdminService } from './admin.service';
 export class AdminComponent implements OnInit {
   private readonly adminService = inject(AdminService);
 
-  readonly problems = signal<Problem[]>([]);
+  readonly problems = signal<ProblemCard[]>([]);
   readonly loading = signal<boolean>(false);
   readonly error = signal<string | null>(null);
 
@@ -22,6 +21,7 @@ export class AdminComponent implements OnInit {
   readonly isEditMode = signal<boolean>(false);
   
   currentProblem!: Problem;
+  testCases!: TestCase[];
 
   ngOnInit(): void {
     this.currentProblem = this.adminService.getEmptyProblem();
@@ -47,18 +47,27 @@ export class AdminComponent implements OnInit {
   openCreateModal(): void {
     this.isEditMode.set(false);
     this.currentProblem = this.adminService.getEmptyProblem();
+    this.testCases = [];
     this.showModal.set(true);
   }
 
-  openEditModal(p: Problem, event: Event): void {
+  openEditModal(name: string, event: Event): void {
     event.stopPropagation();
     this.isEditMode.set(true);
-    this.currentProblem = p;
-    this.showModal.set(true);
+    const request = this.adminService.getProblem(name);
+    request.subscribe({
+      next: (res) => {
+        this.currentProblem = res.problem;
+        this.testCases = res.testCases;
+        this.showModal.set(true);
+      },
+      error: (err) => this.error.set(err.error?.message || 'Failed to fetch the problem.')
+    });
   }
 
   closeModal(): void {
     this.showModal.set(false);
+    this.fetchProblems();
   }
 
   addExample(): void {
@@ -81,19 +90,29 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  addTestCase() {
+    this.testCases.push({ input: '', output: '' });
+  }
+
+  removeTestCase(index: number): void {
+    if (this.testCases.length > 1) {
+      this.testCases.splice(index, 1);
+    }
+  }
+
   trackByIndex(index: number): number {
     return index;
   }
 
   saveProblem(): void {
-    if (!this.currentProblem.name || !this.currentProblem.title) {
+    if (!this.currentProblem.name || !this.currentProblem.title || this.testCases.length === 0) {
       this.error.set('Name and Title are required.');
       return;
     }
     this.currentProblem.constraints = this.currentProblem.constraints.filter(c => c.trim() !== '');
 
     if (this.isEditMode()) {
-      const request = this.adminService.updateProblem(this.currentProblem);
+      const request = this.adminService.updateProblem(this.currentProblem, this.testCases);
       request.subscribe({
         next: (updated) => {
           this.problems.update((list) =>
@@ -104,7 +123,7 @@ export class AdminComponent implements OnInit {
         error: (err) => this.error.set(err.error?.message || 'Failed to update problem.')
       });
     } else {
-      const request = this.adminService.addProblem(this.currentProblem);
+      const request = this.adminService.addProblem(this.currentProblem, this.testCases);
       request.subscribe({
         next: (created) => {
           this.problems.update((list) => [...list, created]);
@@ -115,7 +134,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  deleteProblem(p: Problem, event: Event): void {
+  deleteProblem(p: ProblemCard, event: Event): void {
     event.stopPropagation();
     if (!confirm(`Are you sure you want to delete "${p.title}"?`)) return;
     

@@ -1,5 +1,5 @@
 import Problem, { ProblemDocument } from "../models/Problem";
-
+import Test_Case from "../models/Test_Case";
 
 export interface ProblemDoc {
   name: string,
@@ -12,9 +12,14 @@ export interface ProblemDoc {
   memoryLimit: number,
   constraints: string[]
 }
+
+export interface TestCase {
+  input: string,
+  output: string
+}
 export default class ProblemService {
-  public static async addProblem(problem: ProblemDoc): Promise<ProblemDoc> {
-    await Problem.insertOne({
+  public static async addProblem(problem: ProblemDoc, testCases: TestCase[]) {
+    const newProblem = await Problem.insertOne({
       name: problem.name,
       title: problem.title,
       statement: problem.statement,
@@ -25,27 +30,34 @@ export default class ProblemService {
       memoryLimit: problem.memoryLimit,
       constraints: problem.constraints
     });
-    return problem;
+    await Test_Case.insertOne({
+      problemId: newProblem._id,
+      test_cases: testCases
+    });
+    return { problem, testCases };
   }
 
-  public static async getAllProblems(role: string): Promise<ProblemDocument[]> {
-    if (role === 'user') {
-      return await Problem.find().select("name title");
-    }
-    return await Problem.find();
+  public static async getAllProblems() {
+    return await Problem.find().select("name title timeLimit memoryLimit").sort("_id");
   }
 
-  public static async getProblem(name: string) {
+  public static async getProblem(name: string, role: string) {
     const problem = await Problem.findOne({ name });
-    return problem;
+    if (role === 'user') return problem;
+    const testCase = await Test_Case.findOne({ problemId: problem!._id });
+    return { problem, testCases: testCase!.test_cases };
   }
 
-  public static async updateProblem(problem: ProblemDoc) {
-    await Problem.updateOne({ name: problem.name }, { $set: problem });
-    return this.getAllProblems('admin');
+  public static async updateProblem(problem: ProblemDoc, testCases: TestCase[]) {
+    const currProblem = await Problem.findOne({ name: problem.name });
+    await Test_Case.updateOne({ problemId: currProblem!._id }, { $set: { test_cases: testCases } });
+    await Problem.updateOne({ _id: currProblem!._id }, { $set: problem });
+    return this.getAllProblems();
   }
 
   public static async deleteProblem(name: string) {
-    await Problem.deleteOne({ name });
+    const problem = await Problem.findOne({ name });
+    await Test_Case.deleteOne({ problemId: problem!._id });
+    await Problem.deleteOne({ _id: problem!._id });
   }
 }

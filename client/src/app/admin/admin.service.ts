@@ -3,6 +3,18 @@ import { inject, Injectable } from "@angular/core";
 import { Problem } from "../problemset/problemset.service";
 import { Observable } from "rxjs";
 
+export interface TestCase {
+  input: string,
+  output: string
+};
+
+export interface ProblemCard {
+  name: string,
+  title: string,
+  timeLimit: number,
+  memoryLimit: number
+}
+
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private readonly http = inject(HttpClient);
@@ -27,14 +39,21 @@ export class AdminService {
       .get<Problem[]>(`${this.baseUrl}/problemset`);
   }
 
-  updateProblem(problem: Problem): Observable<Problem> {
+  getProblem(name: string): Observable<{ problem: Problem, testCases: TestCase[] }> {
     return this.http
-      .put<Problem>(`${this.baseUrl}/${problem.name}`, problem);
+      .get<{ problem: Problem, testCases: TestCase[] }>(`${this.baseUrl}/problem/${name}`);
+  }
+  
+  updateProblem(problem: Problem, testCases: TestCase[]): Observable<Problem> {
+    const payload = { problem, testCases };
+    return this.http
+      .put<Problem>(`${this.baseUrl}/${problem.name}`, payload);
   }
 
-  addProblem(problem: Problem): Observable<Problem> {
+  addProblem(problem: Problem, testCases: TestCase[]): Observable<Problem> {
+    const payload = { problem, testCases };
     return this.http
-      .post<Problem>(`${this.baseUrl}/create`, problem);
+      .post<Problem>(`${this.baseUrl}/create`, payload);
   }
 
   deleteProblem(name: string) {
