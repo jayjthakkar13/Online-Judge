@@ -17,7 +17,7 @@
           "builder": "@angular/build:application",
           "options": {
             "define": {
-              "process.env.SERVER_URL": "\"http://13.233.115.117:5000\""
+              "process.env.SERVER_URL": "\"https://backend.modernonlinejudge.me\""
             },
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
