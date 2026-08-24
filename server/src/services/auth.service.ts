@@ -72,7 +72,7 @@ export default class AuthService {
 
 	private static issueTokens(userId: Types.ObjectId): string {
 		const accessExpiresIn = (process.env.JWT_EXPIRES_IN ?? "1h") as NonNullable<SignOptions["expiresIn"]>;
-		const token = jwt.sign({ id: userId }, process.env.JWT_SECRET!, { expiresIn: accessExpiresIn });
+		const token = jwt.sign({ id: userId, role: "user" }, process.env.JWT_SECRET!, { expiresIn: accessExpiresIn });
 		return token;
 	}
 
@@ -92,7 +92,7 @@ export default class AuthService {
 			const token = this.issueTokens(user._id);
 			return GetResponseData(201, ContentTypes.Json, {
 				token,
-				user: { name: user.name, email: user.email, role: user.role }
+				user: { name: user.name, email: user.email }
 			});
 		} catch (err) {
       await User.deleteOne({ _id: user._id });
@@ -122,7 +122,7 @@ export default class AuthService {
 
 		return GetResponseData(200, ContentTypes.Json, {
 			token,
-			user: { name: user.name, email: user.email, role: user.role }
+			user: { name: user.name, email: user.email }
 		});
 	}
 }
